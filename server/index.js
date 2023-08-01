@@ -19,7 +19,7 @@ app.use("/users", userRouter);
 
 const port = process.env.PORT || 5000; 
 
-const URL = "mongodb+srv://elalamimohamed2k17:PropretyPilot@propretypilot.svajcsl.mongodb.net/";
+const URL = process.env.MONGODB_URL;
 
 mongoose.connect(URL)
   .then(() => app.listen(port, () => {
