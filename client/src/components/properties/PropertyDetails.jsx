@@ -20,46 +20,7 @@ const PropertyDetails = ({ property, openAlert, setOpenAlert }) => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getProperties());
-  // }, [dispatch, openAlert]);
-
-  //   const { data: user } = useGetIdentity({
-  //     v3LegacyAuthProviderCompatible: true,
-  //   });
-  //   const { queryResult } = useShow();
-  //   const { mutate } = useDelete();
-  //   const { id } = useParams();
-
-  // const { data, isLoading, isError } = queryResult;
-
-  // const propertyDetails = data?.data ?? {};
-
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     console.log("Loading...");
-  //   } else if (isError) {
-  //     console.log("Something went wrong!");
-  //   }
-  // }, [isLoading, isError]);
-
-  // const isCurrentUser = user.email === propertyDetails.creator.email;
-
   const handleDeleteProperty = (id) => {
-    // const response = window.confirm("Are you sure you want to delete this property?");
-    // if (response) {
-    //   mutate(
-    //     {
-    //       resource: "properties",
-    //       id: id,
-    //     },
-    //     {
-    //       onSuccess: () => {
-    //         navigate("/properties");
-    //       },
-    //     }
-    //   );
-    // }
     try {
       const response = window.confirm(
         "Are you sure you want to delete this property?"
@@ -99,7 +60,7 @@ const PropertyDetails = ({ property, openAlert, setOpenAlert }) => {
             <img
               src={property.images[0]}
               alt="property_details-img"
-              srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
+              // srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
               height={546}
               style={{ objectFit: "cover", borderRadius: "10px" }}
               className="property_details-img"
