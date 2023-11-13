@@ -4,7 +4,6 @@ import * as api from "../api";
 
 // Define the async action creator function for fetching all agents
 export const getAgents = () => async (dispatch) => {
-  console.log("test")
   try {
     // Make the API call and get the response
     const response = await api.fetchAgents();

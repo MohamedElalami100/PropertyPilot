@@ -48,9 +48,9 @@ export const propertySchema = z.object({
       (val) => val === null || (typeof val === "number" && val >= 0),
       "Invalid Area"
     ),
-  amenities: z
+  type: z
     .array(z.string())
-    .min(1, "At least one amenity must be selected"),
+    .min(1, "At least one type must be selected"),
   images: z.union([z.string(), z.array(z.string())]).optional(),
 });
 

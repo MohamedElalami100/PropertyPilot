@@ -13,6 +13,11 @@ export const getPropertys = async (req, res) => {
 export const addProperty = async (req, res) => {
     try {
         let property = new Property(req.body); 
+
+        // start a session
+        // const session = await mongoose.startSession();
+        // session.startTransaction();
+
         property = await property.save(); 
         res.status(201).json({ success: true, data: property }); 
     } catch (error) {

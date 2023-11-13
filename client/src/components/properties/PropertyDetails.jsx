@@ -13,6 +13,7 @@ import Star from "@mui/icons-material/Star";
 import CustomButton from "../utils/CustomButton";
 import { deleteProperty } from "../../actions/property";
 import { useDispatch } from "react-redux";
+import PropertyInfo from "./PropertyInfo";
 import { getProperties } from "../../actions/property";
 
 const PropertyDetails = ({ property, openAlert, setOpenAlert }) => {
@@ -101,6 +102,13 @@ const PropertyDetails = ({ property, openAlert, setOpenAlert }) => {
                     <Typography fontSize={14} color="#808191">
                       {property.location}
                     </Typography>
+                  </Stack>
+                  <Stack mt={3}>
+                    <PropertyInfo
+                      bedrooms={property.bedrooms}
+                      bathrooms={property.bathrooms}
+                      area={property.area}
+                    />
                   </Stack>
                 </Box>
 

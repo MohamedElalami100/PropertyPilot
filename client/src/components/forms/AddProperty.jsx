@@ -136,23 +136,21 @@ const AddPropertyForm = (openAlert, setOpenAlert) => {
         <FormHelperText error>{errors.area.message}</FormHelperText>
       )}
       <FormControl className={classes.formControl}>
-        <InputLabel>Amenities</InputLabel>
+        <InputLabel>For:</InputLabel>
         <Controller
-          name="amenities"
+          name="type"
           defaultValue={[]}
           control={control}
           render={({ field }) => (
-            <Select {...field} multiple>
-              <MenuItem value="Swimming Pool">Swimming Pool</MenuItem>
-              <MenuItem value="Garden">Garden</MenuItem>
-              <MenuItem value="Parking">Parking</MenuItem>
-              <MenuItem value="Gym">Gym</MenuItem>
+            <Select {...field}>
+              <MenuItem value="sale">Sale</MenuItem>
+              <MenuItem value="rent">Rent</MenuItem>
             </Select>
           )}
         />
       </FormControl>
-      {errors.amenities && (
-        <FormHelperText error>{errors.amenities.message}</FormHelperText>
+      {errors.type && (
+        <FormHelperText error>{errors.type.message}</FormHelperText>
       )}
       <Typography variant="subtitle1">Image:</Typography>
       <FileBase

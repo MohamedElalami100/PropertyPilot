@@ -31,7 +31,7 @@ const propertySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  amenities: {
+  type: {
     type: [String], // an array of strings representing amenities
     default: [],
   },
@@ -39,6 +39,9 @@ const propertySchema = new mongoose.Schema({
     type: [String], // an array of strings representing image URLs
     default: [],
   },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'User',
+  }
 });
 
 // Create the Property model

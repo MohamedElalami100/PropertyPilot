@@ -14,15 +14,11 @@ export const addUser = async (req, res) => {
     try {
         const { name, email, avatar } = req.body;
 
-        console.log(req.body);
-
         const userExists = await User.findOne({ email });
 
         if (userExists) return res.status(200).json(userExists);
         let newUser = new User(req.body);
-        console.log(newUser);
         newUser = await newUser.save();
-        console.log(newUser);
 
         res.status(200).json({ success: true, data: newUser });
     } catch (error) {

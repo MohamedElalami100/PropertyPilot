@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
+import PropertyInfo from "./PropertyInfo";
 
 const PropertyCard = ({ property, openAlert, setOpenAlert }) => {
   return (
@@ -19,6 +20,7 @@ const PropertyCard = ({ property, openAlert, setOpenAlert }) => {
         "&:hover": {
           boxShadow: "0 22px 45px 2px rgba(176, 176, 176, 0.1)",
         },
+        background: "transparent",
         textDecoration: "none",
         cursor: "pointer",
       }}
@@ -58,6 +60,11 @@ const PropertyCard = ({ property, openAlert, setOpenAlert }) => {
               {property.location}
             </Typography>
           </Stack>
+          <PropertyInfo
+            bedrooms={property.bedrooms}
+            bathrooms={property.bathrooms}
+            area={property.area}
+          />
         </Stack>
         <Box
           px={1.5}

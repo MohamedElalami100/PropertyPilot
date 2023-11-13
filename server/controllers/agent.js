@@ -13,7 +13,6 @@ export const getAgents = async (req, res) => {
     console.log(1);
     try {
         let agent = new Agent(req.body);
-        console.log(agent) 
         agent = await agent.save(); 
         res.status(201).json({ success: true, data: agent }); 
     } catch (error) {
@@ -28,21 +27,18 @@ export const updateAgent = async (req, res) => {
       if (!mongoose.Types.ObjectId.isValid(agentId)) {
         return res.status(400).json({ error: "Invalid agent ID." });
       }
-      console.log(2);
       // Update the properties with the new values from the request body
       const result = await Agent.findOneAndUpdate(
         { _id: agentId }, 
         { $set: req.body }, 
         { new: true }
       ).lean();
-      console.log(2)
 
 
       if (!result) {
         return res.status(404).json({ error: 'agent not found.' });
       }
 
-      console.log(2)
       res.status(200).json({ success: true, data: result });
     } catch (error) {
       res.status(500).json({ error: "Failed to update agent." });
