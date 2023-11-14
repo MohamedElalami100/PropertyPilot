@@ -17,7 +17,6 @@ import { propertySchema } from "../../interfaces/property";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useStyles from "./formStyles";
 import { useGetIdentity } from "@refinedev/core";
-import { Cloudinary } from "@cloudinary/url-gen";
 
 const AddPropertyForm = () => {
   const { data: user } = useGetIdentity({
@@ -36,8 +35,8 @@ const AddPropertyForm = () => {
 
   const dispatch = useDispatch();
 
-  const [images, setImages] = useState({ name: "", url: "" });
-  const [imageSrc, setImageSrc] = useState(null);
+  const [images, setImages] = useState(null);
+  const [imageSrc, setImageSrc] = useState({ name: "", url: "" });
 
   const handleImageChange = (file) => {
     setImages(file);
