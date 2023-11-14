@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import UpdatePropertyForm from "../components/forms/UpdateProperty";
 import { useParams } from "react-router-dom";
 
-const UpdateProperty = ({ openAlert, setOpenAlert }) => {
+const UpdateProperty = () => {
   const { id } = useParams();
   const properties = useSelector((state) => state.property);
   const property = properties.filter((prop) => prop._id === id)[0];
@@ -14,11 +14,7 @@ const UpdateProperty = ({ openAlert, setOpenAlert }) => {
       <Typography fontSize={25} fontWeight={700} color="#11142d">
         Edit Property
       </Typography>
-      <UpdatePropertyForm
-        property={property}
-        openAlert={openAlert}
-        setOpenAlert={setOpenAlert}
-      />
+      <UpdatePropertyForm property={property} />
     </Stack>
   );
 };

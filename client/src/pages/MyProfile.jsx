@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { useGetIdentity } from "@refinedev/core";
 import Avatar from "@mui/material/Avatar";
 
-const MyProfile = ({ agent, openAlert, setOpenAlert }) => {
+const MyProfile = ({ agent }) => {
   const { data: user } = useGetIdentity({
     v3LegacyAuthProviderCompatible: true,
   });

@@ -21,7 +21,7 @@ const InfoBar = ({ icon, name }) => (
 );
 
 // Main AgentCard component
-const AgentCard = ({ agent, openAlert, setOpenAlert }) => {
+const AgentCard = ({ agent }) => {
   // Custom hook to get the current user's identity
   // const { data: currentUser } = useGetIdentity({
   //     v3LegacyAuthProviderCompatible: true,

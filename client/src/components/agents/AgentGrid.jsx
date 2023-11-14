@@ -7,7 +7,7 @@ import AgentCard from "./AgentCard";
 import UpdateAgentForm from "../forms/UpdateAgent";
 import AgentDetails from "./AgentDetails";
 
-const AgentGrid = ({ openAlert, setOpenAlert, search = "" }) => {
+const AgentGrid = ({ search = "" }) => {
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -48,11 +48,7 @@ const AgentGrid = ({ openAlert, setOpenAlert, search = "" }) => {
           <Grid container spacing={2}>
             {agents.map((agent) => (
               <Grid item xs={12} sm={12} md={12} lg={12} key={agent._id}>
-                <AgentCard
-                  agent={agent}
-                  openAlert={openAlert}
-                  setOpenAlert={setOpenAlert}
-                />
+                <AgentCard agent={agent} />
               </Grid>
             ))}
           </Grid>

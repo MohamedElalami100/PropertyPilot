@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Button,
   TextField,
@@ -10,14 +11,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { addProperty } from "../../actions/property";
 import { propertySchema } from "../../interfaces/property";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useStyles from "./formStyles";
-import FileBase from "react-file-base64";
+import { useGetIdentity } from "@refinedev/core";
+import { Cloudinary } from "@cloudinary/url-gen";
 
-const AddPropertyForm = (openAlert, setOpenAlert) => {
+const AddPropertyForm = () => {
+  const { data: user } = useGetIdentity({
+    v3LegacyAuthProviderCompatible: true,
+  });
+
   const {
     register,
     control,
@@ -30,28 +36,59 @@ const AddPropertyForm = (openAlert, setOpenAlert) => {
 
   const dispatch = useDispatch();
 
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState({ name: "", url: "" });
+  const [imageSrc, setImageSrc] = useState(null);
+
+  const handleImageChange = (file) => {
+    setImages(file);
+    const reader = (readFile) =>
+      new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => resolve(fileReader.result);
+        fileReader.readAsDataURL(readFile);
+      });
+
+    reader(file).then((result) =>
+      setImageSrc({ name: file?.name, url: result })
+    );
+  };
 
   const onSubmit = (data) => {
     try {
-      // Merge the property data with the selected images
-      const propertyDataWithImages = {
-        ...data,
-        images: images,
-      };
+      //Handle images using cloudinary
+      const formdata = new FormData();
+      formdata.append("file", images);
+      formdata.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
+      formdata.append("upload_preset", "xeawk7dl");
+      axios
+        .post(
+          `https://${import.meta.env.VITE_CLOUDINARY_API_KEY}:${
+            import.meta.env.VITE_CLOUDINARY_API_SECRET
+          }@api.cloudinary.com/v1_1/${
+            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+          }/image/upload`,
+          formdata
+        )
+        .then((response) => {
+          // Merge the property data with the selected images
+          const propertyDataWithImages = {
+            ...data,
+            images: response.data.url,
+            email: user.email,
+          };
 
-      const { _id, ...transformedObject } = propertyDataWithImages;
+          const { _id, ...transformedObject } = propertyDataWithImages;
 
-      // Send the property data with images to the backend to create a new property
-      dispatch(addProperty(transformedObject));
+          // Send the property data with images to the backend to create a new property
+          dispatch(addProperty(transformedObject));
 
-      reset();
-      setImages(null);
+          reset();
+          setImages({ name: "", url: "" });
+          setImageSrc(null);
 
-      setOpenAlert(!openAlert);
-
-      // Handle successful submission (e.g., show a success message)
-      console.log("Property added successfully!");
+          // Handle successful submission (e.g., show a success message)
+          console.log("Property added successfully!");
+        });
     } catch (error) {
       // Handle error if property creation fails
       console.error("Error adding property:", error);
@@ -136,39 +173,46 @@ const AddPropertyForm = (openAlert, setOpenAlert) => {
         <FormHelperText error>{errors.area.message}</FormHelperText>
       )}
       <FormControl className={classes.formControl}>
-        <InputLabel>For:</InputLabel>
-        <Controller
-          name="type"
-          defaultValue={[]}
-          control={control}
-          render={({ field }) => (
-            <Select {...field}>
-              <MenuItem value="sale">Sale</MenuItem>
-              <MenuItem value="rent">Rent</MenuItem>
-            </Select>
-          )}
-        />
+        <InputLabel>Property Type:</InputLabel>
+        <Select {...register("type")} name="type">
+          <MenuItem value="apartment">Apartment</MenuItem>
+          <MenuItem value="house">House</MenuItem>
+          <MenuItem value="condo">Condo</MenuItem>
+          <MenuItem value="townhouse">Townhouse</MenuItem>
+          <MenuItem value="villa">Villa</MenuItem>
+          <MenuItem value="land">Land</MenuItem>
+        </Select>
       </FormControl>
       {errors.type && (
         <FormHelperText error>{errors.type.message}</FormHelperText>
       )}
       <Typography variant="subtitle1">Image:</Typography>
-      <FileBase
-        name="images"
-        id="fileInput"
-        type="file"
-        multiple={false}
-        onDone={({ base64 }) => setImages(base64)}
-      />
-      {images && (
+      <Button
+        component="label"
+        sx={{
+          width: "fit-content",
+          color: "#2ed480",
+          textTransform: "capitalize",
+          fontSize: 16,
+        }}
+      >
+        Upload *
+        <input
+          hidden
+          required
+          accept="image/*"
+          type="file"
+          onChange={(e) => {
+            handleImageChange(e.target.files[0]);
+          }}
+        />
+      </Button>
+      {imageSrc && (
         <img
-          src={images}
+          src={imageSrc.url}
           alt="Selected Profile"
           className={classes.previewImage}
         />
-      )}
-      {errors.images && (
-        <FormHelperText error>{errors.images.message}</FormHelperText>
       )}
       <Button
         type="submit"

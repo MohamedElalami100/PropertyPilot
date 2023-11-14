@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useStyles from "./formStyles";
 import FileBase from "react-file-base64";
 
-const UpdateAgentForm = ({ agentData, openAlert, setOpenAlert }) => {
+const UpdateAgentForm = ({ agentData }) => {
   const {
     register,
     handleSubmit,
@@ -58,8 +58,6 @@ const UpdateAgentForm = ({ agentData, openAlert, setOpenAlert }) => {
 
       // Send the updated agent data with the image (if changed) to the backend
       dispatch(updateAgent(agentDataWithImages._id, agentDataWithImages));
-
-      setOpenAlert(!openAlert);
 
       // Handle successful submission (e.g., show a success message)
       console.log("Agent updated successfully!");

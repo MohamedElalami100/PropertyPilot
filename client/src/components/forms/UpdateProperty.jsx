@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useStyles from "./formStyles";
 import FileBase from "react-file-base64";
 
-const UpdatePropertyForm = ({ property, openAlert, setOpenAlert }) => {
+const UpdatePropertyForm = ({ property }) => {
   const {
     register,
     reset,
@@ -41,8 +41,6 @@ const UpdatePropertyForm = ({ property, openAlert, setOpenAlert }) => {
 
       // Send the property data with images to the backend to update the property
       dispatch(updateProperty(property._id, propertyDataWithImages));
-
-      setOpenAlert(!openAlert);
 
       // Handle successful submission (e.g., show a success message)
       console.log("Property updated successfully!");

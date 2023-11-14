@@ -6,7 +6,7 @@ import CustomButton from "../components/utils/CustomButton";
 import { Stack } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 
-const AllProperties = ({ openAlert, setOpenAlert }) => {
+const AllProperties = () => {
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
@@ -27,11 +27,7 @@ const AllProperties = ({ openAlert, setOpenAlert }) => {
           icon={<Add />}
         />
       </Stack>
-      <PropertyGrid
-        openAlert={openAlert}
-        setOpenAlert={setOpenAlert}
-        search={search}
-      />
+      <PropertyGrid search={search} />
     </Stack>
   );
 };

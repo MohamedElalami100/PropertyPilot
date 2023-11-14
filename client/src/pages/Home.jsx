@@ -5,7 +5,7 @@ import PropertyGrid from "../components/properties/PropertyGrid";
 import PieChart from "../components/charts/PieChart";
 import PropertyReferrals from "../components/charts/PropertyReferrals";
 import TotalRevenue from "../components/charts/TotalRevenue";
-const Home = ({ openAlert, setOpenAlert }) => {
+const Home = () => {
   return (
     <Box>
       <Typography fontSize={25} fontWeight={700} color="#11142D">
@@ -59,7 +59,7 @@ const Home = ({ openAlert, setOpenAlert }) => {
         minWidth="100%"
         mt="25px"
       >
-        <PropertyGrid openAlert={openAlert} setOpenAlert={setOpenAlert} />
+        <PropertyGrid />
       </Box>
     </Box>
   );

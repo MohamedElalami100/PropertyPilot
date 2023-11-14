@@ -49,9 +49,8 @@ export const propertySchema = z.object({
       "Invalid Area"
     ),
   type: z
-    .array(z.string())
+    .string()
     .min(1, "At least one type must be selected"),
-  images: z.union([z.string(), z.array(z.string())]).optional(),
 });
 
 export const validateProperty = (data) => {

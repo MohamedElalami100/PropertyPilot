@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import PropertyInfo from "./PropertyInfo";
 import { getProperties } from "../../actions/property";
 
-const PropertyDetails = ({ property, openAlert, setOpenAlert }) => {
+const PropertyDetails = ({ property }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();

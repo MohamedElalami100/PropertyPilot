@@ -9,7 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import PropertyInfo from "./PropertyInfo";
 
-const PropertyCard = ({ property, openAlert, setOpenAlert }) => {
+const PropertyCard = ({ property }) => {
   return (
     <Card
       component={Link}

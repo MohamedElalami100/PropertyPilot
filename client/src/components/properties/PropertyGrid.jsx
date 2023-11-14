@@ -5,12 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import PropertyCard from "./PropertyCard";
 import Typography from "@mui/material/Typography";
 
-const PropertyGrid = ({
-  openAlert,
-  setOpenAlert,
-  props = null,
-  search = "",
-}) => {
+const PropertyGrid = ({ props = null, search = "" }) => {
   let properties = useSelector((state) => state.property);
   console.log(properties);
 
@@ -57,11 +52,7 @@ const PropertyGrid = ({
           <Grid container spacing={2}>
             {properties.map((property) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={property._id}>
-                <PropertyCard
-                  property={property}
-                  openAlert={openAlert}
-                  setOpenAlert={setOpenAlert}
-                />
+                <PropertyCard property={property} />
               </Grid>
             ))}
           </Grid>

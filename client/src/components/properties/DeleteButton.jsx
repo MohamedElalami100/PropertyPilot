@@ -9,7 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useDispatch } from "react-redux";
 import { deleteProperty } from "../../actions/property";
 
-const DeleteButton = ({ _id, openAlert, setOpenAlert }) => {
+const DeleteButton = ({ _id }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false); // Local state for the dialog
 
@@ -28,7 +28,6 @@ const DeleteButton = ({ _id, openAlert, setOpenAlert }) => {
     } catch (error) {
       console.error("Error deleting property:", error);
     }
-    setOpenAlert(!openAlert);
     handleClose();
   };
 

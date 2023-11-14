@@ -1,70 +1,3 @@
-// import { useDispatch } from "react-redux";
-// import { useEffect, useState } from "react";
-// import { getProperties } from "./actions/property";
-// import AddAgentForm from "./components/forms/AddAgent";
-// import AgentGrid from "./components/agents/AgentGrid";
-// import { getAgents } from "./actions/agent";
-// import PropertyGrid from "./components/properties/PropertyGrid";
-// import AllProperties from "./pages/AllProperties";
-// import AllAgents from "./pages/AllAgents";
-// import CreateProperty from "./pages/CreateProperty";
-// import CreateAgent from "./pages/CreateAgent";
-// import UpdateProperty from "./pages/UpdateProperty";
-// import { useSelector } from "react-redux";
-// import UpdateAgent from "./pages/UpdateAgent";
-// import Home from "./pages/Home";
-// import Agent from "./pages/Agent";
-// import Property from "./pages/Property";
-
-// const App = () => {
-//   const dispatch = useDispatch();
-
-//   const [openAlert, setOpenAlert] = useState(false);
-
-//   const properties = useSelector((state) => state.property);
-//   const agents = useSelector((state) => state.agents);
-
-//   console.log(agents);
-
-//   useEffect(() => {
-//     dispatch(getProperties());
-//     dispatch(getAgents());
-//   }, [dispatch, openAlert]);
-
-//   return (
-//     <>
-//       {/* <PropertyGrid openAlert={openAlert} setOpenAlert={setOpenAlert} /> */}
-//       <AllProperties openAlert={openAlert} setOpenAlert={setOpenAlert} />
-//       <AllAgents openAlert={openAlert} setOpenAlert={setOpenAlert} />
-//       <CreateProperty openAlert={openAlert} setOpenAlert={setOpenAlert} />
-//       <CreateAgent openAlert={openAlert} setOpenAlert={setOpenAlert} />
-//       <UpdateProperty
-//         property={properties[0]}
-//         openAlert={openAlert}
-//         setOpenAlert={setOpenAlert}
-//       />
-//       <UpdateAgent
-//         agent={agents[0]}
-//         openAlert={openAlert}
-//         setOpenAlert={setOpenAlert}
-//       />
-//       <Home openAlert={openAlert} setOpenAlert={setOpenAlert} />
-//       <Agent
-//         agent={agents[0]}
-//         openAlert={openAlert}
-//         setOpenAlert={setOpenAlert}
-//       />
-//       <Property
-//         property={properties[0]}
-//         openAlert={openAlert}
-//         setOpenAlert={setOpenAlert}
-//       />
-//     </>
-//   );
-// };
-
-// export default App;
-
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as api from "./api";
@@ -78,9 +11,7 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
-import ChatBubbleOutline from "@mui/icons-material/ChatBubbleOutline";
 import PeopleAltOutlined from "@mui/icons-material/PeopleAltOutlined";
-import StarOutlineRounded from "@mui/icons-material/StarOutlineRounded";
 import VillaOutlined from "@mui/icons-material/VillaOutlined";
 
 import dataProvider from "@refinedev/simple-rest";
@@ -125,12 +56,10 @@ axiosInstance.interceptors.request.use((request) => {
 function App() {
   const dispatch = useDispatch();
 
-  const [openAlert, setOpenAlert] = useState(false);
-
   useEffect(() => {
     dispatch(getProperties());
     dispatch(getAgents());
-  }, [dispatch, openAlert]);
+  }, [dispatch]);
 
   const authProvider = {
     login: async ({ credential }) => {

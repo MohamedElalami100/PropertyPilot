@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import PropertyCard from "../properties/PropertyCard";
 
-const AgentDetails = ({ agent, openAlert, setOpenAlert }) => {
+const AgentDetails = ({ agent }) => {
   const allProperties = useSelector((state) => state.property);
 
   if (agent) {
@@ -142,12 +142,7 @@ const AgentDetails = ({ agent, openAlert, setOpenAlert }) => {
               }}
             >
               {agentPropreties?.map((property) => (
-                <PropertyCard
-                  key={property._id}
-                  property={property}
-                  openAlert={openAlert}
-                  setOpenAlert={setOpenAlert}
-                />
+                <PropertyCard key={property._id} property={property} />
               ))}
             </Box>
           </Box>
