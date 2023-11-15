@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { useDelete, useGetIdentity, useShow } from "@refinedev/core";
-import { useParams, useNavigate } from "react-router-dom";
+import { useGetIdentity } from "@refinedev/core";
+import { useNavigate } from "react-router-dom";
 import ChatBubble from "@mui/icons-material/ChatBubble";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
@@ -14,13 +14,26 @@ import CustomButton from "../utils/CustomButton";
 import { deleteProperty } from "../../actions/property";
 import { useDispatch } from "react-redux";
 import PropertyInfo from "./PropertyInfo";
-import { getProperties } from "../../actions/property";
+import { useList } from "@refinedev/core";
 
 const PropertyDetails = ({ property }) => {
+  const { data: user } = useGetIdentity({
+    v3LegacyAuthProviderCompatible: true,
+  });
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
+  const isCurrentUser = user?.userid === property?.creator;
+
+  // const { data } = useList({ resource: "users" });
+
+  // console.log(data);
+  // const propertyCreator = agents.map(
+  //   (agent) => agent.userid === property?.creator
+  // )[0];
+
+  // console.log(propertyCreator);
   const handleDeleteProperty = (id) => {
     try {
       const response = window.confirm(
@@ -74,6 +87,14 @@ const PropertyDetails = ({ property }) => {
                 flexWrap="wrap"
                 alignItems="center"
               >
+                <Typography
+                  fontSize={18}
+                  fontWeight={500}
+                  color="#11142D"
+                  textTransform="capitalize"
+                >
+                  {property.type}
+                </Typography>
                 <Box>
                   {[1, 2, 3, 4, 5].map((item) => (
                     <Star key={`star-${item}`} sx={{ color: "#F2C94C" }} />
@@ -168,9 +189,9 @@ const PropertyDetails = ({ property }) => {
               >
                 <img
                   src={
-                    // property.creator.avatar
-                    //   ? property.creator.avatar
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
+                    property.creator.avatar
+                      ? property.creator.avatar
+                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
                   }
                   alt="avatar"
                   width={90}
@@ -183,8 +204,7 @@ const PropertyDetails = ({ property }) => {
 
                 <Box mt="15px">
                   <Typography fontSize={18} fontWeight={600} color="#11142D">
-                    {/* {propertyDetails.creator.name} */}
-                    creator
+                    {propertyCreator?.name}
                   </Typography>
                   <Typography
                     mt="5px"
@@ -199,7 +219,7 @@ const PropertyDetails = ({ property }) => {
                 <Stack mt="15px" direction="row" alignItems="center" gap={1}>
                   <Place sx={{ color: "#808191" }} />
                   <Typography fontSize={14} fontWeight={400} color="#808191">
-                    North Carolina, USA
+                    {propertyCreator?.email}
                   </Typography>
                 </Stack>
               </Stack>
@@ -212,26 +232,21 @@ const PropertyDetails = ({ property }) => {
                 gap={2}
               >
                 <CustomButton
-                  // title={!isCurrentUser ? "Message" : "Edit"}
-                  title="Edit"
+                  title={!isCurrentUser ? "Message" : "Edit"}
                   backgroundColor="#475BE8"
                   color="#FCFCFC"
                   fullWidth
-                  icon={<Edit />}
-                  // icon={!isCurrentUser ? <ChatBubble /> : <Edit />}
+                  icon={!isCurrentUser ? <ChatBubble /> : <Edit />}
                   handleClick={() =>
                     navigate(`/properties/edit/${property._id}`)
                   }
                 />
                 <CustomButton
-                  // title={!isCurrentUser ? "Call" : "Delete"}
-                  title="Delete"
-                  // backgroundColor={!isCurrentUser ? "#2ED480" : "#d42e2e"}
-                  backgroundColor="#d42e2e"
+                  title={!isCurrentUser ? "Call" : "Delete"}
+                  backgroundColor={!isCurrentUser ? "#2ED480" : "#d42e2e"}
                   color="#FCFCFC"
                   fullWidth
-                  icon={<Delete />}
-                  // icon={!isCurrentUser ? <Phone /> : <Delete />}
+                  icon={!isCurrentUser ? <Phone /> : <Delete />}
                   handleClick={() => handleDeleteProperty(property._id)}
                 />
               </Stack>

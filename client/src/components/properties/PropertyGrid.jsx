@@ -5,16 +5,42 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import PropertyCard from "./PropertyCard";
 import Typography from "@mui/material/Typography";
 
-const PropertyGrid = ({ props = null, search = "" }) => {
+const PropertyGrid = ({
+  props = null,
+  search = "",
+  priceOrder = 2,
+  filterValue = "",
+}) => {
   let properties = useSelector((state) => state.property);
-  console.log(properties);
+  let filteredProperties = properties;
+  let headText = "All Properties";
 
   if (props !== null) {
     properties = props;
-  } else if (search.length !== 0) {
-    const filteredProperties = properties.filter((prop) =>
-      prop.title.toLowerCase().includes(search.toLowerCase())
+  } else {
+    // handling serachBar
+    if (search.length !== 0) {
+      filteredProperties = filteredProperties.filter((prop) =>
+        prop.title.toLowerCase().includes(search.toLowerCase())
+      );
+      headText = "Properties Searched By(" + search + ") ";
+    }
+    //Handling soort By Price
+    if (priceOrder == false) {
+      //asc order
+      filteredProperties = filteredProperties.sort((a, b) => a.price - b.price);
+    } else if (priceOrder == true) {
+      //des oreder
+      filteredProperties = filteredProperties.sort((a, b) => b.price - a.price);
+    }
+    // Handling filter By property type
+    filteredProperties = filteredProperties.filter(
+      (prop) => filterValue == "" || prop.type == filterValue
     );
+    if (filterValue != "") {
+      headText += " of Type " + filterValue;
+    }
+
     properties = filteredProperties;
   }
 
@@ -47,7 +73,7 @@ const PropertyGrid = ({ props = null, search = "" }) => {
           <Typography fontSize={25} fontWeight={700} color="#11142d">
             {!properties.length && !isLoading
               ? "There are no properties"
-              : "All Properties"}
+              : headText}
           </Typography>
           <Grid container spacing={2}>
             {properties.map((property) => (

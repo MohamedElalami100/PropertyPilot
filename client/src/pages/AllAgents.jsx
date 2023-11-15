@@ -20,7 +20,7 @@ const AllAgents = () => {
       >
         <SearchBar setSearch={setSearch} />
         <CustomButton
-          title="Add Agent"
+          title="Become an Agent"
           handleClick={() => navigate("/agents/create")}
           backgroundColor="#475be8"
           color="#fcfcfc"

@@ -211,12 +211,20 @@ const UpdatePropertyForm = ({ property }) => {
             name="type"
             defaultValue={property.type}
           >
-            <MenuItem value="apartment">Apartment</MenuItem>
-            <MenuItem value="house">House</MenuItem>
-            <MenuItem value="condo">Condo</MenuItem>
-            <MenuItem value="townhouse">Townhouse</MenuItem>
-            <MenuItem value="villa">Villa</MenuItem>
-            <MenuItem value="land">Land</MenuItem>
+            {[
+              "Apartment",
+              "Villa",
+              "Farmhouse",
+              "Condos",
+              "Townhouse",
+              "Duplex",
+              "Studio",
+              "Chalet",
+            ].map((type) => (
+              <MenuItem key={type} value={type.toLowerCase()}>
+                {type}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         {errors.amenities && (
