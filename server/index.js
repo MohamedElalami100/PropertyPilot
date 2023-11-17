@@ -3,7 +3,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import propertyRouter from "./routes/property.js";
-import agentRouter from "./routes/agent.js";
 import userRouter from "./routes/user.js";
 import dotenv from "dotenv";
 dotenv.config();
@@ -16,7 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/properties", propertyRouter);
-app.use("/agents", agentRouter);
 app.use("/users", userRouter);
 
 const port = process.env.PORT || 5000; 

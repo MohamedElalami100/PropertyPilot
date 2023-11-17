@@ -4,8 +4,6 @@ import { Grid } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@mui/material/Typography";
 import AgentCard from "./AgentCard";
-import UpdateAgentForm from "../forms/UpdateAgent";
-import AgentDetails from "./AgentDetails";
 
 const AgentGrid = ({ search = "" }) => {
   const [isLoading, setLoading] = useState(true);
@@ -16,7 +14,8 @@ const AgentGrid = ({ search = "" }) => {
   }, []);
   console.log(isLoading);
 
-  let agents = useSelector((state) => state.agents);
+  let agents = useSelector((state) => state.users);
+  useSelector((state) => console.log(state));
 
   if (search.length !== 0) {
     const filteredAgents = agents.filter((agent) =>

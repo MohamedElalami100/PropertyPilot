@@ -1,6 +1,5 @@
 import React from "react";
 import Email from "@mui/icons-material/Email";
-import Phone from "@mui/icons-material/Phone";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -11,8 +10,8 @@ const AgentDetails = ({ agent }) => {
   const allProperties = useSelector((state) => state.property);
 
   if (agent) {
-    const agentPropreties = allProperties.filter(
-      (prop) => agent.properties.indexOf(prop._id) !== -1
+    const agentPropreties = allProperties?.filter(
+      (prop) => prop.creator == agent.email
     );
     return (
       <Box>
@@ -50,8 +49,8 @@ const AgentDetails = ({ agent }) => {
               >
                 <img
                   src={
-                    agent.profilePicture
-                      ? agent.profilePicture
+                    agent.avatar
+                      ? agent.avatar
                       : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
                   }
                   width={78}
@@ -84,27 +83,6 @@ const AgentDetails = ({ agent }) => {
                           fontWeight={500}
                           color="#808191"
                         >
-                          Phone Number
-                        </Typography>
-                        <Box
-                          display="flex"
-                          flexDirection="row"
-                          alignItems="center"
-                          gap="10px"
-                        >
-                          <Phone sx={{ color: "#11142D" }} />
-                          <Typography fontSize={14} color="#11142D" noWrap>
-                            {agent.phone}
-                          </Typography>
-                        </Box>
-                      </Stack>
-
-                      <Stack flex={1} gap="15px">
-                        <Typography
-                          fontSize={14}
-                          fontWeight={500}
-                          color="#808191"
-                        >
                           Email
                         </Typography>
                         <Box
@@ -129,8 +107,8 @@ const AgentDetails = ({ agent }) => {
 
         {agentPropreties.length > 0 && (
           <Box mt={2.5} borderRadius="15px" padding="20px" bgcolor="#FCFCFC">
-            <Typography fontSize={18} fontWeight={600} color="#11142D">
-              Properties
+            <Typography fontSize={20} fontWeight={700} color="#11142D">
+              {User.name} Properties
             </Typography>
 
             <Box

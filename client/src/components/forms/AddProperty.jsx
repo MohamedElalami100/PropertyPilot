@@ -73,7 +73,7 @@ const AddPropertyForm = () => {
           const propertyDataWithImages = {
             ...data,
             images: response.data.url,
-            email: user.email,
+            creator: user.email,
           };
 
           const { _id, ...transformedObject } = propertyDataWithImages;

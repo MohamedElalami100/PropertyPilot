@@ -24,32 +24,23 @@ export const addProperty = async (req, res) => {
       status,
       type,
       images,
-      email,
+      creator,
     } = req.body;
 
     //start a session
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const user = await User.findOne({ email }).session(session);
+    const user = await User.findOne({email: creator }).session(session);
 
     if (!user) throw new Error("User not found");
 
-    let property = new Property({
-      title,
-      price,
-      description,
-      location,
-      bedrooms,
-      bathrooms,
-      area,
-      status,
-      type,
-      images,
-      creator: user._id,
-    });
+    let property = new Property(req.body);
 
     property = await property.save();
+
+    user.allProperties.push(property._id);
+    await user.save({ session });
 
     await session.commitTransaction();
     res.status(201).json({ success: true, data: property });

@@ -31,13 +31,12 @@ import MyProfile from "./pages/MyProfile";
 import Property from "./pages/Property";
 import AllProperties from "./pages/AllProperties";
 import CreateProperty from "./pages/CreateProperty";
-import CreateAgent from "./pages/CreateAgent";
-import UpdateAgent from "./pages/UpdateAgent";
 import Agent from "./pages/Agent";
 import UpdateProperty from "./pages/UpdateProperty";
 
-import { getAgents } from "./actions/agent";
+import { getUsers } from "./actions/user";
 import { getProperties } from "./actions/property";
+import { addUser } from "./actions/user";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request) => {
@@ -58,7 +57,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProperties());
-    dispatch(getAgents());
+    dispatch(getUsers());
   }, [dispatch]);
 
   const authProvider = {
@@ -73,6 +72,8 @@ function App() {
         });
 
         const data = response.data;
+
+        dispatch(addUser(data));
 
         if (response.status === 200) {
           localStorage.setItem(
@@ -148,8 +149,6 @@ function App() {
               name: "agents",
               list: AllAgents,
               show: Agent,
-              create: CreateAgent,
-              edit: UpdateAgent,
               icon: <PeopleAltOutlined />,
             },
             {

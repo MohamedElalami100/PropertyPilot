@@ -36,7 +36,7 @@ const propertySchema = new mongoose.Schema({
     default: [],
   },
   status: {
-    type: [String], // an array of strings representing amenities
+    type: [String], // an array of strings representing status
     default: [],
   },
   images: {
@@ -44,7 +44,7 @@ const propertySchema = new mongoose.Schema({
     default: [],
   },
   creator: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'User',
+    type: String
   }
 });
 

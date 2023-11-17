@@ -23,25 +23,26 @@ const InfoBar = ({ icon, name }) => (
 // Main AgentCard component
 const AgentCard = ({ agent }) => {
   // Custom hook to get the current user's identity
-  // const { data: currentUser } = useGetIdentity({
-  //     v3LegacyAuthProviderCompatible: true,
-  // });
+  const { data: currentUser } = useGetIdentity({
+    v3LegacyAuthProviderCompatible: true,
+  });
 
   // Function to generate the link for the agent card based on the current user's email
-  // const generateLink = () => {
-  //     if (currentUser.email === email) return "/my-profile";
-  //     return `/agents/show/${id}`;
-  // };
+  const generateLink = () => {
+    if (currentUser.email === agent.email) return "/my-profile";
+    return `/agents/show/${agent.email}`;
+  };
+
   if (agent) {
     const allProperties = useSelector((state) => state.property);
     const agentPropreties = allProperties.filter(
-      (prop) => agent.properties.indexOf(prop._id) !== -1
+      (prop) => agent.properties?.indexOf(prop._id) !== -1
     );
 
     return (
       <Box
         component={Link}
-        to={`/agents/show/${agent._id}`}
+        to={generateLink()}
         width="100%"
         sx={{
           display: "flex",
@@ -57,8 +58,8 @@ const AgentCard = ({ agent }) => {
         {/* Agent's avatar */}
         <img
           src={
-            agent.profilePicture
-              ? agent.profilePicture
+            agent.avatar
+              ? agent.avatar
               : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
           }
           alt="user"
@@ -96,12 +97,6 @@ const AgentCard = ({ agent }) => {
             <InfoBar
               icon={<EmailOutlined sx={{ color: "#808191" }} />}
               name={agent.email}
-            />
-
-            {/* Phone number */}
-            <InfoBar
-              icon={<Phone sx={{ color: "#808191" }} />}
-              name={agent.phone}
             />
 
             {/* Number of properties */}

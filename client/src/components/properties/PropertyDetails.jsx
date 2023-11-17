@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { useGetIdentity } from "@refinedev/core";
@@ -12,9 +11,8 @@ import Typography from "@mui/material/Typography";
 import Star from "@mui/icons-material/Star";
 import CustomButton from "../utils/CustomButton";
 import { deleteProperty } from "../../actions/property";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropertyInfo from "./PropertyInfo";
-import { useList } from "@refinedev/core";
 
 const PropertyDetails = ({ property }) => {
   const { data: user } = useGetIdentity({
@@ -24,16 +22,14 @@ const PropertyDetails = ({ property }) => {
 
   const dispatch = useDispatch();
 
-  const isCurrentUser = user?.userid === property?.creator;
+  const isCurrentUser = user?.email === property?.creator;
 
-  // const { data } = useList({ resource: "users" });
+  const agents = useSelector((state) => state.users);
+  const propertyCreator = agents.filter(
+    (agent) => agent.email === property?.creator
+  )[0];
 
-  // console.log(data);
-  // const propertyCreator = agents.map(
-  //   (agent) => agent.userid === property?.creator
-  // )[0];
-
-  // console.log(propertyCreator);
+  console.log(propertyCreator);
   const handleDeleteProperty = (id) => {
     try {
       const response = window.confirm(
@@ -189,8 +185,8 @@ const PropertyDetails = ({ property }) => {
               >
                 <img
                   src={
-                    property.creator.avatar
-                      ? property.creator.avatar
+                    propertyCreator.avatar
+                      ? propertyCreator.avatar
                       : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
                   }
                   alt="avatar"

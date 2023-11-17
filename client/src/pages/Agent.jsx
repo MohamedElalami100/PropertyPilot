@@ -5,8 +5,9 @@ import AgentDetails from "../components/agents/AgentDetails";
 
 const Agent = () => {
   const { id } = useParams();
-  const agents = useSelector((state) => state.agents);
-  const agent = agents.filter((agent) => agent._id === id)[0];
+  const agents = useSelector((state) => state.users);
+  const agent = agents?.filter((agent) => agent.email === id)[0];
+  console.log(agent);
   return <AgentDetails agent={agent} />;
 };
 

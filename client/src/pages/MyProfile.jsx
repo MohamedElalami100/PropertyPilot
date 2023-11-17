@@ -4,21 +4,21 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useGetIdentity } from "@refinedev/core";
+import { useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
+import PropertyCard from "../components/properties/PropertyCard";
 
-const MyProfile = ({ agent }) => {
+const MyProfile = () => {
   const { data: user } = useGetIdentity({
     v3LegacyAuthProviderCompatible: true,
   });
+
   const showUserInfo = user && (user.name || user.avatar);
-  // {showUserInfo && (
-  //   <Stack direction="row" gap="16px" alignItems="center">
-  //     {user.avatar && <Avatar src={user.avatar} alt={user.name} />}
-  //     {user.name && (
-  //       <Typography variant="subtitle2">{user.name}</Typography>
-  //     )}
-  //   </Stack>
-  // )}
+
+  const allProperties = useSelector((state) => state.property);
+  const agentPropreties = allProperties?.filter(
+    (prop) => prop.creator == user.email
+  );
 
   if (showUserInfo) {
     return (
@@ -55,17 +55,6 @@ const MyProfile = ({ agent }) => {
                 flexDirection={{ xs: "column", md: "row" }}
                 gap="20px"
               >
-                {/* <img
-                  src={
-                    agent.profilePicture
-                      ? agent.profilePicture
-                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
-                  }
-                  width={78}
-                  height={78}
-                  alt="user_profile"
-                  className="my_profile_user-img"
-                /> */}
                 {user.avatar && <Avatar src={user.avatar} alt={user.name} />}
 
                 <Box
@@ -113,6 +102,26 @@ const MyProfile = ({ agent }) => {
             </Box>
           </Box>
         </Box>
+        {agentPropreties.length > 0 && (
+          <Box mt={2.5} borderRadius="15px" padding="20px" bgcolor="#FCFCFC">
+            <Typography fontSize={20} fontWeight={700} color="#11142D">
+              My Properties
+            </Typography>
+
+            <Box
+              mt={2.5}
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 2.5,
+              }}
+            >
+              {agentPropreties?.map((property) => (
+                <PropertyCard key={property._id} property={property} />
+              ))}
+            </Box>
+          </Box>
+        )}
       </Box>
     );
   } else return <></>;
