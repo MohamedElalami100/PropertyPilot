@@ -7,8 +7,16 @@ const useStyles = makeStyles((theme) => ({
     width: "95%",
     margin: "0 auto",
   },
+  StyledDiv: {
+    width: "100%",
+
+    [theme.breakpoints.up("md")]: {
+      width: "50%",
+    },
+  },
   formControl: {
     marginBottom: theme.spacing(2),
+    width: "100%",
   },
   submitButton: {
     marginTop: theme.spacing(2),

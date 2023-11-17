@@ -10,6 +10,7 @@ import {
   FormHelperText,
   Typography,
 } from "@material-ui/core";
+import Stack from "@mui/material/Stack";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { addProperty } from "../../actions/property";
@@ -122,77 +123,105 @@ const AddPropertyForm = () => {
       {errors.description && (
         <FormHelperText error>{errors.description.message}</FormHelperText>
       )}
-      <TextField
-        {...register("price", { valueAsNumber: true })}
-        label="Price"
-        name="price"
-        type="number"
-        className={classes.formControl}
-      />
-      {errors.price && (
-        <FormHelperText error>{errors.price.message}</FormHelperText>
-      )}
-      <TextField
-        {...register("location")}
-        label="Location"
-        name="location"
-        className={classes.formControl}
-      />
-      {errors.location && (
-        <FormHelperText error>{errors.location.message}</FormHelperText>
-      )}
-      <TextField
-        {...register("bedrooms", { valueAsNumber: true })}
-        label="Bedrooms"
-        name="bedrooms"
-        type="number"
-        className={classes.formControl}
-      />
-      {errors.bedrooms && (
-        <FormHelperText error>{errors.bedrooms.message}</FormHelperText>
-      )}
-      <TextField
-        {...register("bathrooms", { valueAsNumber: true })}
-        label="Bathrooms"
-        name="bathrooms"
-        type="number"
-        className={classes.formControl}
-      />
-      {errors.bathrooms && (
-        <FormHelperText error>{errors.bathrooms.message}</FormHelperText>
-      )}
-      <TextField
-        {...register("area", { valueAsNumber: true })}
-        label="Area"
-        name="area"
-        type="number"
-        className={classes.formControl}
-      />
-      {errors.area && (
-        <FormHelperText error>{errors.area.message}</FormHelperText>
-      )}
-      <FormControl className={classes.formControl}>
-        <InputLabel>Property Type:</InputLabel>
-        <Select {...register("type")} name="type">
-          {[
-            "Apartment",
-            "Villa",
-            "Farmhouse",
-            "Condos",
-            "Townhouse",
-            "Duplex",
-            "Studio",
-            "Chalet",
-          ].map((type) => (
-            <MenuItem key={type} value={type.toLowerCase()}>
-              {type}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      {errors.type && (
-        <FormHelperText error>{errors.type.message}</FormHelperText>
-      )}
+      <Stack
+        direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+        spacing={{ md: 2 }}
+      >
+        <div className={classes.StyledDiv}>
+          <TextField
+            {...register("price", { valueAsNumber: true })}
+            label="Price"
+            name="price"
+            type="number"
+            className={classes.formControl}
+          />
+          {errors.price && (
+            <FormHelperText error>{errors.price.message}</FormHelperText>
+          )}
+        </div>
+        <div className={classes.StyledDiv}>
+          <TextField
+            {...register("location")}
+            label="Location"
+            name="location"
+            className={classes.formControl}
+          />
+          {errors.location && (
+            <FormHelperText error>{errors.location.message}</FormHelperText>
+          )}
+        </div>
+      </Stack>
+      <Stack
+        direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+        spacing={{ md: 2 }}
+      >
+        <div className={classes.StyledDiv}>
+          <TextField
+            {...register("bedrooms", { valueAsNumber: true })}
+            label="Bedrooms"
+            name="bedrooms"
+            type="number"
+            className={classes.formControl}
+          />
+          {errors.bedrooms && (
+            <FormHelperText error>{errors.bedrooms.message}</FormHelperText>
+          )}
+        </div>
+        <div className={classes.StyledDiv}>
+          <TextField
+            {...register("bathrooms", { valueAsNumber: true })}
+            label="Bathrooms"
+            name="bathrooms"
+            type="number"
+            className={classes.formControl}
+          />
+          {errors.bathrooms && (
+            <FormHelperText error>{errors.bathrooms.message}</FormHelperText>
+          )}
+        </div>
+      </Stack>
+      <Stack
+        direction={{ xs: "column", sm: "column", md: "row", lg: "row" }}
+        spacing={{ md: 2 }}
+      >
+        <div className={classes.StyledDiv}>
+          <TextField
+            {...register("area", { valueAsNumber: true })}
+            label="Area"
+            name="area"
+            type="number"
+            className={classes.formControl}
+          />
+          {errors.area && (
+            <FormHelperText error>{errors.area.message}</FormHelperText>
+          )}
+        </div>
+        <div className={classes.StyledDiv}>
+          <FormControl className={classes.formControl}>
+            <InputLabel>Property Type:</InputLabel>
+            <Select {...register("type")} name="type">
+              {[
+                "Apartment",
+                "Villa",
+                "Farmhouse",
+                "Condos",
+                "Townhouse",
+                "Duplex",
+                "Studio",
+                "Chalet",
+              ].map((type) => (
+                <MenuItem key={type} value={type.toLowerCase()}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {errors.type && (
+            <FormHelperText error>{errors.type.message}</FormHelperText>
+          )}
+        </div>
+      </Stack>
+
       <FormControl className={classes.formControl}>
         <InputLabel>Status:</InputLabel>
         <Select {...register("status")} name="status">
@@ -230,11 +259,7 @@ const AddPropertyForm = () => {
         />
       </Button>
       {imageSrc && (
-        <img
-          src={imageSrc.url}
-          alt="Selected Profile"
-          className={classes.previewImage}
-        />
+        <img src={imageSrc.url} alt="" className={classes.previewImage} />
       )}
       <Button
         type="submit"
