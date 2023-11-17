@@ -70,9 +70,11 @@ const PropertyDetails = ({ property }) => {
             <img
               src={property.images[0]}
               alt="property_details-img"
-              // srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
-              height={546}
-              style={{ objectFit: "cover", borderRadius: "10px" }}
+              style={{
+                objectFit: "cover",
+                borderRadius: "10px",
+                width: "100%",
+              }}
               className="property_details-img"
             />
 
