@@ -227,8 +227,27 @@ const UpdatePropertyForm = ({ property }) => {
             ))}
           </Select>
         </FormControl>
-        {errors.amenities && (
-          <FormHelperText error>{errors.amenities.message}</FormHelperText>
+        {errors.type && (
+          <FormHelperText error>{errors.type.message}</FormHelperText>
+        )}
+        <FormControl className={classes.formControl}>
+          <InputLabel>Status:</InputLabel>
+          <Select
+            {...register("status")}
+            name="status"
+            defaultValue={property.status}
+          >
+            {["for Rent (per day)", "for Rent (per month)", "for Sale"].map(
+              (status) => (
+                <MenuItem key={status} value={status.toLowerCase()}>
+                  {status}
+                </MenuItem>
+              )
+            )}
+          </Select>
+        </FormControl>
+        {errors.status && (
+          <FormHelperText error>{errors.status.message}</FormHelperText>
         )}
         <Typography variant="subtitle1">Image:</Typography>
         <Button

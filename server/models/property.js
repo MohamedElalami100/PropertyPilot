@@ -32,6 +32,10 @@ const propertySchema = new mongoose.Schema({
     required: true,
   },
   type: {
+    type: [String], // an array of strings representing types
+    default: [],
+  },
+  status: {
     type: [String], // an array of strings representing amenities
     default: [],
   },

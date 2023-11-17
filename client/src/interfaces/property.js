@@ -51,6 +51,9 @@ export const propertySchema = z.object({
   type: z
     .string()
     .min(1, "At least one type must be selected"),
+  status: z
+    .string()
+    .min(1, "At least one status must be selected"),
 });
 
 export const validateProperty = (data) => {
