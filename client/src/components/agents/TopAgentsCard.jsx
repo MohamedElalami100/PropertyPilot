@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import { Avatar } from "@material-ui/core";
 
 // Component for rendering the information bars (e.g., Email, Location)
 const InfoBar = ({ icon, name }) => (
@@ -21,7 +22,7 @@ const InfoBar = ({ icon, name }) => (
 );
 
 // Main AgentCard component
-const AgentCard = ({ agent }) => {
+const TopAgentsCard = ({ agent }) => {
   // Custom hook to get the current user's identity
   const { data: currentUser } = useGetIdentity({
     v3LegacyAuthProviderCompatible: true,
@@ -48,39 +49,30 @@ const AgentCard = ({ agent }) => {
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           gap: "20px",
-          padding: "20px",
-          textDecoration: "none", // Remove the underline from the link
+          padding: "5px",
+          textDecoration: "none",
           "&:hover": {
             boxShadow: "0 22px 45px 2px rgba(176, 176, 176, 0.1)",
           },
         }}
       >
         {/* Agent's avatar */}
-        <img
-          src={
-            agent.avatar
-              ? agent.avatar
-              : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
-          }
-          alt="user"
-          width={90}
-          height={90}
-          style={{ borderRadius: 8, objectFit: "cover" }}
-        />
-
+        <Stack justifyContent="center" alignItems="center">
+          {agent.avatar && <Avatar src={agent.avatar} alt={agent.name} />}
+        </Stack>
         {/* Stack for displaying agent details */}
         <Stack
           direction="column"
           justifyContent="space-between"
           flex={1}
-          gap={{ xs: 4, sm: 2 }}
+          gap={{ xs: 1, sm: 0.5 }}
         >
           {/* Agent's name and role */}
           <Stack gap={2} direction="row" flexWrap="wrap" alignItems="center">
-            <Typography fontSize={22} fontWeight={600} color="#11142d">
+            <Typography fontSize={16} fontWeight={600} color="#11142d">
               {agent.name}
             </Typography>
-            <Typography fontSize={14} color="#808191">
+            <Typography fontSize={10} color="#808191">
               Real-Estate Agent
             </Typography>
           </Stack>
@@ -93,12 +85,6 @@ const AgentCard = ({ agent }) => {
             alignItems="center"
             gap={2}
           >
-            {/* Email */}
-            <InfoBar
-              icon={<EmailOutlined sx={{ color: "#808191" }} />}
-              name={agent.email}
-            />
-
             {/* Number of properties */}
             <InfoBar
               icon={<LocationCity sx={{ color: "#808191" }} />}
@@ -111,4 +97,4 @@ const AgentCard = ({ agent }) => {
   } else return <></>;
 };
 
-export default AgentCard;
+export default TopAgentsCard;

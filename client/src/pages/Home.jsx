@@ -3,9 +3,28 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import PropertyGrid from "../components/properties/PropertyGrid";
 import PieChart from "../components/charts/PieChart";
-import PropertyReferrals from "../components/charts/PropertyReferrals";
-import TotalRevenue from "../components/charts/TotalRevenue";
+import TopAgentsPannel from "../components/charts/TopAgentsPannel";
+import { useSelector } from "react-redux";
+import PropertyDistribtion from "../components/charts/PropertyDistribtion";
+
 const Home = () => {
+  //Cards data:
+  const allProperties = useSelector((state) => state.property);
+  const propertiesCount = allProperties.length;
+
+  const propsForSale = allProperties.filter(
+    (prop) => prop.status == "for sale"
+  ).length;
+  const propsForRentperM = allProperties.filter(
+    (prop) => prop.status == "for rent (per month)"
+  ).length;
+  const propsForRentperD = allProperties.filter(
+    (prop) => prop.status == "for rent (per day)"
+  ).length;
+
+  const allAgents = useSelector((state) => state.users);
+  const agentsCount = allAgents.length;
+
   return (
     <Box>
       <Typography fontSize={25} fontWeight={700} color="#11142D">
@@ -15,26 +34,26 @@ const Home = () => {
       <Box mt="20px" display="flex" flexWrap="wrap" gap={4}>
         <PieChart
           title="Properties for Sale"
-          value={684}
-          series={[75, 25]}
+          value={propsForSale}
+          series={[propsForSale, propertiesCount - propsForSale]}
           colors={["#275be8", "#c4e8ef"]}
         />
         <PieChart
-          title="Properties for Rent"
-          value={550}
-          series={[60, 40]}
+          title="Properties for Rent (per month)"
+          value={propsForRentperM}
+          series={[propsForRentperM, propertiesCount - propsForRentperM]}
           colors={["#275be8", "#c4e8ef"]}
         />
         <PieChart
-          title="Total customers"
-          value={5684}
-          series={[75, 25]}
+          title="Properties for Rent (per day)"
+          value={propsForRentperD}
+          series={[propsForRentperD, propertiesCount - propsForRentperD]}
           colors={["#275be8", "#c4e8ef"]}
         />
         <PieChart
-          title="Properties for Cities"
-          value={555}
-          series={[75, 25]}
+          title="Total Agents"
+          value={agentsCount}
+          series={[100, 0]}
           colors={["#275be8", "#c4e8ef"]}
         />
       </Box>
@@ -45,8 +64,8 @@ const Home = () => {
         direction={{ xs: "column", lg: "row" }}
         gap={4}
       >
-        <TotalRevenue />
-        <PropertyReferrals />
+        <TopAgentsPannel />
+        <PropertyDistribtion />
       </Stack>
 
       <Box

@@ -2,7 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { propertyReferralsInfo } from "../../constants/propertyReferralsInfo";
+import {
+  colorsList,
+  typesList,
+} from "../../constants/propertyDistributionInfo";
+import { useSelector } from "react-redux";
 
 const ProgressBar = ({ title, percentage, color }) => (
   <Box width="100%">
@@ -33,7 +37,42 @@ const ProgressBar = ({ title, percentage, color }) => (
   </Box>
 );
 
-const PropertyReferrals = () => {
+const PropertyDistribtion = () => {
+  const allProperties = useSelector((state) => state.property);
+  const propertiesCount = allProperties.length;
+
+  //properties distrition by type data:
+  const propsByTypeCount = [];
+  let i = 0;
+  let othersCount = 0;
+  typesList.forEach((type) => {
+    if (i < 4) {
+      propsByTypeCount.push({
+        title: type,
+        percentage: Math.round(
+          (allProperties.filter((prop) => prop.type == type.toLowerCase())
+            .length *
+            100) /
+            (propertiesCount != 0 ? propertiesCount : 1)
+        ),
+        color: colorsList[i],
+      });
+    } else {
+      othersCount += Math.round(
+        (allProperties.filter((prop) => prop.type == type.toLowerCase())
+          .length *
+          100) /
+          (propertiesCount != 0 ? propertiesCount : 1)
+      );
+    }
+    i += 1;
+  });
+  propsByTypeCount.push({
+    title: "Others",
+    percentage: othersCount,
+    color: colorsList[colorsList.length - 1],
+  });
+
   return (
     <Box
       p={4}
@@ -45,11 +84,11 @@ const PropertyReferrals = () => {
       borderRadius="15px"
     >
       <Typography fontSize={18} fontWeight={600} color="#11142d">
-        Property Referrals
+        Property Distribution By Types
       </Typography>
 
       <Stack my="20px" direction="column" gap={4}>
-        {propertyReferralsInfo.map((bar) => (
+        {propsByTypeCount.map((bar) => (
           <ProgressBar
             key={bar.title}
             title={bar.title}
@@ -62,4 +101,4 @@ const PropertyReferrals = () => {
   );
 };
 
-export default PropertyReferrals;
+export default PropertyDistribtion;
