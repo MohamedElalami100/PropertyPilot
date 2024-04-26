@@ -1,7 +1,5 @@
 # Property Pilot: Real Estate Management System 🏡
 
-**Table des matières**
-
 # **Project Overview**
 
 Welcome to the showcase of **Property Pilot**, a comprehensive real estate management system built using the MERN stack (MongoDB, Express.js, React, Node.js). This project combines powerful technologies to create a seamless and feature-rich application designed to streamline real estate operations. From user authentication to property management, **Property Pilot** provides a robust solution for real estate professionals. 🚀
